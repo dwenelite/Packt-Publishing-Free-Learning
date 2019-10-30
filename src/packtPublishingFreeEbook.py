@@ -53,7 +53,8 @@ def packt_cli(cfgpath, grab, grabd, dall, sgd, mail, status_mail, folder, noauth
 
         # Grab the newest book
         if grab or grabd or sgd or mail:
-            product_data = claim_product(api_client, cfg.anticaptcha_api_key)
+            #product_data = claim_product(api_client, cfg.anticaptcha_api_key)
+            product_data = claim_product(api_client)
 
             # Send email about successful book grab. Do it only when book
             # isn't going to be emailed as we don't want to send email twice.

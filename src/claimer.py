@@ -52,7 +52,8 @@ def get_single_page_books_data(api_client, page):
         logger.error('Couldn\'t fetch page {} of user\'s books data.'.format(page))
 
 
-def claim_product(api_client, anticaptcha_key):
+#def claim_product(api_client, anticaptcha_key):
+def claim_product(api_client):
     """Grab Packt Free Learning ebook."""
     logger.info("Start grabbing ebook...")
 
@@ -80,12 +81,14 @@ def claim_product(api_client, anticaptcha_key):
         logger.info('You have already claimed Packt Free Learning "{}" offer.'.format(product_data['title']))
         return product_data
 
-    logger.info('Started solving ReCAPTCHA on Packt Free Learning website...')
-    recaptcha_solution = solve_recaptcha(anticaptcha_key, PACKT_FREE_LEARNING_URL, PACKT_RECAPTCHA_SITE_KEY)
+    # Stop using anti captcha service
+    logger.info('Bypass trying to solve ReCAPTCHA on Packt Free Learning website...')
+    #recaptcha_solution = solve_recaptcha(anticaptcha_key, PACKT_FREE_LEARNING_URL, PACKT_RECAPTCHA_SITE_KEY)
 
+    # New claim response without captcha
     claim_response = api_client.put(
         PACKT_API_FREE_LEARNING_CLAIM_URL.format(user_id=user_id, offer_id=offer_id),
-        json={'recaptcha': recaptcha_solution}
+        #json={'recaptcha': recaptcha_solution}
     )
 
     if claim_response.status_code == 200:
